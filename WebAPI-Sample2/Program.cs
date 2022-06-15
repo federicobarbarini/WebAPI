@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using WebAPI_Sample1.Helper;
+using WebAPI_Sample2.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Configuration["DataPath"] = @"C:\JobFactory\WebAPI\Data";
 
 // Add services to the container.
 builder.Services.AddControllers();
