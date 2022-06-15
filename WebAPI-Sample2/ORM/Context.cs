@@ -15,7 +15,7 @@ namespace WebAPI_Sample2.ORM
 
         public Context(IConfiguration configuration)
         {
-            var path = _configuration["DataPath"];
+            var path = configuration["DataPath"];
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             dataPath = path;
             _configuration = configuration;
