@@ -6,9 +6,6 @@ using WebAPI_Sample2.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Configuration["DataPath"] = @"C:\JobFactory\WebAPI\Data";
-
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
