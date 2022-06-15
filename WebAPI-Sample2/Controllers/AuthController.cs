@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI_Sample2.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebAPI_Sample2.Controllers
         #region "--> Metodi"
 
         [HttpGet, Route("login"), AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetLogin([FromQuery] Models.LoginInfo info)
         {
@@ -50,7 +51,7 @@ namespace WebAPI_Sample2.Controllers
         }
 
         [HttpGet, Route("validate"), Authorize]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Dictionary<string, string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetValidate()
@@ -78,7 +79,7 @@ namespace WebAPI_Sample2.Controllers
         }
 
         [HttpGet, Route("users"), Authorize]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Models.UserInfo[]), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<IEnumerable<Models.UserInfo>> GetUsers()
@@ -88,6 +89,28 @@ namespace WebAPI_Sample2.Controllers
                 //--> Leggo gli utenti configurati
                 var c = new ORM.Context(_configuration);
                 var result = c.GetUsers();
+
+                //--> Restituisco la risposta
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
+        }
+
+        [HttpGet, Route("user"), Authorize]
+        [ProducesResponseType(typeof(Models.UserInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult<Models.UserInfo> GetUser([Required] string id)
+        {
+            try
+            {
+                Guid userID = new Guid(id);
+                //--> Leggo l'utente selezionato
+                var c = new ORM.Context(_configuration);
+                var result =(from x in c.GetUsers() where x.UserId == userID select x).FirstOrDefault();
 
                 //--> Restituisco la risposta
                 return Ok(result);

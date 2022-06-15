@@ -1,0 +1,46 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+<PageTitle>Elenco utenti</PageTitle>
+
+<h1>Elenco utenti</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (elenco == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Displayname</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in elenco)
+            {
+                <tr>
+                    <td>@i.UserName</td>
+                    <td>@i.DisplayName</td>
+                    <td>@i.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private UserInfo[]? elenco;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Client c = new Client(string.Empty, Http);
+        elenco = (await c.UsersAsync()).ToArray();
+    }
+
+}

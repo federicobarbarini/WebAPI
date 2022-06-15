@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI-Sample1", "WebAPI-Sample1\WebAPI-Sample1.csproj", "{288FF3E1-5CCD-4249-9979-9E563E0D8EDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI-Sample2", "WebAPI-Sample2\WebAPI-Sample2.csproj", "{FA938E38-62F4-4D02-A8E1-C8AFE2CAD038}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI-Sample2", "WebAPI-Sample2\WebAPI-Sample2.csproj", "{FA938E38-62F4-4D02-A8E1-C8AFE2CAD038}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp-Sample", "BlazorApp-Sample\BlazorApp-Sample.csproj", "{9181AFA9-8D86-4306-80E0-7A2A227FA2F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FA938E38-62F4-4D02-A8E1-C8AFE2CAD038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA938E38-62F4-4D02-A8E1-C8AFE2CAD038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA938E38-62F4-4D02-A8E1-C8AFE2CAD038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9181AFA9-8D86-4306-80E0-7A2A227FA2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9181AFA9-8D86-4306-80E0-7A2A227FA2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9181AFA9-8D86-4306-80E0-7A2A227FA2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9181AFA9-8D86-4306-80E0-7A2A227FA2F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
