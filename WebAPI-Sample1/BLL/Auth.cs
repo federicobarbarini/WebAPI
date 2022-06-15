@@ -54,8 +54,7 @@ namespace WebAPI_Sample1.BLL
                         new Claim("UserId", user.UserId.ToString()),
                         new Claim("DisplayName", user.DisplayName.ToReal()),
                         new Claim("UserName", user.UserName.ToReal()),
-                        new Claim("Email", user.Email.ToReal())
-            };
+                        new Claim("Email", user.Email.ToReal()) };
 
             //--> Genero il Token JWT
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

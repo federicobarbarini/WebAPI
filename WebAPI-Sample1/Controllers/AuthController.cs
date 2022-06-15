@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace WebAPI_Sample1.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -76,7 +77,28 @@ namespace WebAPI_Sample1.Controllers
             };
         }
 
-        [HttpPost, Route("add"), Authorize]
+        [HttpGet, Route("users"), Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult<IEnumerable<Models.UserInfo>> GetUsers()
+        {
+            try
+            {
+                //--> Leggo gli utenti configurati
+                var c = new BLL.Auth(_configuration);
+                var result = c.GetUsers();
+
+                //--> Restituisco la risposta
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            };
+        }
+
+        [HttpPost, Route("add"), AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
