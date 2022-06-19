@@ -55,6 +55,7 @@ namespace WebAPI_Sample2.Helper
 
         public static void AddSwaggerJWTAuth(this WebApplicationBuilder builder)
         {
+            
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
