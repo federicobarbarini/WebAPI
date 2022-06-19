@@ -42,15 +42,6 @@
     private bool loading;
     private string error;
 
-    protected override void OnInitialized()
-    {
-        // redirect to home if already logged in
-        if (AuthenticationService.User != null)
-        {
-            Navigation.NavigateTo("");
-        }
-    }
-
     private async void HandleValidSubmit()
     {
         loading = true;

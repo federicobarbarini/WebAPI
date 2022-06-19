@@ -30,6 +30,12 @@ namespace BlazorApp_Sample.Services
 
         #endregion
 
+        #region --> Proprietà
+
+        public UserInfo User { get; private set; }
+
+        #endregion
+
         #region --> Metodi
 
         public async override Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -53,6 +59,7 @@ namespace BlazorApp_Sample.Services
                 //Get Claims from Token and Build Authenticated User Object
                 _httpclient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
                 var claims = ParseClaims(jwtSecurityToken);
+                await loadUser(claims);
                 var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
                 return new AuthenticationState(user);
 
@@ -61,6 +68,13 @@ namespace BlazorApp_Sample.Services
             {
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
+        }
+
+        private async Task loadUser(IList<Claim> claims)
+        {
+            var userid = (from x in claims where x.Type == "UserId" select x.Value).FirstOrDefault().ToReal();
+            var c = new Client(string.Empty, _httpclient);
+            User = await c.UserAsync(userid);
         }
 
         private IList<Claim> ParseClaims(JwtSecurityToken jwtSecurityToken)
@@ -87,11 +101,11 @@ namespace BlazorApp_Sample.Services
 
         internal void SignOut()
         {
+            User = null;
             _httpclient.DefaultRequestHeaders.Remove("Authorization");
             ClaimsPrincipal nobody = new ClaimsPrincipal(new ClaimsIdentity());
             Task<AuthenticationState> authenticationState = Task.FromResult(new AuthenticationState(nobody));
             NotifyAuthenticationStateChanged(authenticationState);
-
         }
 
         #endregion

@@ -6,11 +6,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var returnUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+        var returnUrl = Navigation.ToBaseRelativePath(Navigation.Uri).ToReal();
+        if (returnUrl.ToLowerInvariant() == "logout") returnUrl = string.Empty;
+
         var authenticationState = await AuthenticationStateTask;
         if (authenticationState?.User?.Identity is null || !authenticationState.User.Identity.IsAuthenticated)
         {
-            Navigation.NavigateTo($"login?returnUrl={returnUrl}", forceLoad:true);
+            if (returnUrl == string.Empty)
+                Navigation.NavigateTo("login", forceLoad: true);
+            else
+                Navigation.NavigateTo($"login?returnUrl={returnUrl}", forceLoad: true);
         }
     }
 }
