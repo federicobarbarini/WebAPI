@@ -83,12 +83,15 @@ namespace BlazorApp_Sample.Services
             // Value is username
             claims.Add(new Claim(ClaimTypes.Name, jwtSecurityToken.Subject));
             return claims;
-
         }
 
-        internal async Task SignIn()
+        internal async Task SignIn(string username, string password)
         {
-            string token = await _localStorageService.GetItem<string>("token");
+            var c = new Client(string.Empty, _httpclient);
+            var token = await c.LoginAsync(username, password);
+            if (string.IsNullOrEmpty(token)) return;
+            await _localStorageService.SetItem("token", token);
+
             JwtSecurityToken jwtSecurityToken = jwtSecurityTokenHandler.ReadJwtToken(token);
             _httpclient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
             var claims = ParseClaims(jwtSecurityToken);
@@ -96,13 +99,13 @@ namespace BlazorApp_Sample.Services
 
             Task<AuthenticationState> autnentcationState = Task.FromResult(new AuthenticationState(user));
             NotifyAuthenticationStateChanged(autnentcationState);
-
         }
 
-        internal void SignOut()
+        internal async Task SignOut()
         {
             User = null;
             _httpclient.DefaultRequestHeaders.Remove("Authorization");
+            await _localStorageService.RemoveItem("token");
             ClaimsPrincipal nobody = new ClaimsPrincipal(new ClaimsIdentity());
             Task<AuthenticationState> authenticationState = Task.FromResult(new AuthenticationState(nobody));
             NotifyAuthenticationStateChanged(authenticationState);

@@ -12,8 +12,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var apiUrl = new Uri(builder.Configuration["apiUrl"].ToReal());
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = apiUrl });
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>()
-                .AddScoped<ILocalStorageService, LocalStorageService>()
+builder.Services.AddScoped<ILocalStorageService, LocalStorageService>()
                 .AddScoped<AppAuthenticationStateProvider>()
                 .AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<AppAuthenticationStateProvider>());
 

@@ -1,6 +1,6 @@
 ﻿@page "/login"
 @layout LoginLayout
-@inject IAuthenticationService AuthenticationService
+@inject AppAuthenticationStateProvider AuthenticationService
 @inject NavigationManager Navigation
 
 <div class="col-md-6 offset-md-3 mt-5">
@@ -47,7 +47,7 @@
         loading = true;
         try
         {
-            await AuthenticationService.Login(model.Username, model.Password);
+            await AuthenticationService.SignIn(model.Username, model.Password);
             var returnUrl = Navigation.QueryString("returnUrl") ?? "";
             Navigation.NavigateTo(returnUrl);
         }
