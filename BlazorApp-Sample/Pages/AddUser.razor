@@ -1,7 +1,7 @@
-﻿@page "/login"
+﻿@page "/add"
 @layout LoginLayout
-@inject AppAuthenticationStateProvider AuthenticationService
 @inject NavigationManager Navigation
+@inject HttpClient Http
 
 <div class="col-md-6 offset-md-3 mt-5">
     <div class="card">
@@ -11,8 +11,18 @@
                 <DataAnnotationsValidator />
                 <div class="form-group">
                     <label>Username</label>
-                    <InputText @bind-Value="model.Username" class="form-control" />
-                    <ValidationMessage For="@(() => model.Username)" />
+                    <InputText @bind-Value="model.UserName" class="form-control" />
+                    <ValidationMessage For="@(() => model.UserName)" />
+                </div>
+                <div class="form-group">
+                    <label>Display name</label>
+                    <InputText @bind-Value="model.DisplayName" class="form-control" />
+                    <ValidationMessage For="@(() => model.DisplayName)" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <InputText @bind-Value="model.Email" type="email" class="form-control" />
+                    <ValidationMessage For="@(() => model.Email)" />
                 </div>
                 <div class="form-group">
                     <label>Password</label>
@@ -23,12 +33,8 @@
                     @if (loading) {
                         <span class="spinner-border spinner-border-sm mr-1"></span>
                     }
-                    Login
-                </button>&nbsp;
-                <NavLink class="btn btn-success" href="add">
-                    Add new user
-                </NavLink>
-
+                    Add
+                </button>
                 @if (!string.IsNullOrEmpty(error)) {
                     <div class="alert alert-danger mt-3 mb-0">@error</div>
                 }
@@ -39,7 +45,7 @@
 
 @code {
 
-    private Model model = new Model();
+    private UserInfo model = new UserInfo();
     private bool loading;
     private string error;
 
@@ -48,9 +54,9 @@
         loading = true;
         try
         {
-            await AuthenticationService.SignIn(model.Username, model.Password);
-            var returnUrl = Navigation.QueryString("returnUrl") ?? "";
-            Navigation.NavigateTo(returnUrl);
+            Client c = new Client(string.Empty, Http);
+            await c.AddAsync(model);
+            Navigation.NavigateTo("login");
         }
         catch (Exception ex)
         {
@@ -58,14 +64,5 @@
             loading = false;
             StateHasChanged();
         }
-    }
-
-    private class Model
-    {
-        [Required]
-        public string Username { get; set; }
-
-        [Required]
-        public string Password { get; set; }
     }
 }
