@@ -67,5 +67,38 @@ namespace BlazorApp_Sample.Helpers
 
         #endregion
 
+        #region --> DateTime
+
+        public static int ToDateInt(this DateTime? d)
+        {
+            if (!d.HasValue) return 0;
+            DateTime dt = d.ToReal();
+            return dt.ToDateInt();
+        }
+
+        public static int ToDateInt(this DateTime d)
+        {
+            return (d.Year * 10000) + (d.Month * 100) + (d.Day);
+        }
+
+        public static DateTime FromDateInt(this int? d)
+        {
+            return d.ToReal().FromDateInt();
+        }
+
+        public static DateTime FromDateInt(this int d)
+        {
+            if (d == 0) return DateTime.MinValue;
+
+            int year = d / 10000;
+            int month= (d - (year*10000)) / 100;
+            int day = d - (year * 10000 + month * 100);
+
+            DateTime dt = new DateTime(year, month, day);
+            return dt;
+        }
+
+        #endregion
+
     }
 }

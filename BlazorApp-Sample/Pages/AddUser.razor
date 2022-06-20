@@ -63,7 +63,6 @@
         loading = true;
         try
         {
-            model.DataN = (DataN.Year * 10000) + (DataN.Month * 100) + (DataN.Day);
             Client c = new Client(string.Empty, Http);
             await c.AddAsync(model);
             Navigation.NavigateTo("login");
