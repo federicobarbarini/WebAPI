@@ -42,6 +42,7 @@ namespace BlazorApp_Sample.Services
         {
             try
             {
+                _httpclient.DefaultRequestHeaders.Remove("Authorization");
                 string token = await _localStorageService.GetItem<string>("token");
                 if (string.IsNullOrWhiteSpace(token))
                 {
@@ -87,6 +88,7 @@ namespace BlazorApp_Sample.Services
 
         internal async Task SignIn(string username, string password)
         {
+            _httpclient.DefaultRequestHeaders.Remove("Authorization");
             var c = new Client(string.Empty, _httpclient);
             var token = await c.LoginAsync(username, password);
             if (string.IsNullOrEmpty(token)) return;
