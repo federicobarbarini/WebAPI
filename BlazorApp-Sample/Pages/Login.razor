@@ -52,7 +52,7 @@
             var returnUrl = Navigation.QueryString("returnUrl") ?? "";
             Navigation.NavigateTo(returnUrl);
         }
-        catch (Exception ex)
+        catch (ApiException ex)
         {
             error = ex.Message;
             loading = false;

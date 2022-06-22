@@ -32,7 +32,7 @@ namespace WebAPI_Sample2.Controllers
 
         [HttpGet, Route("login"), AllowAnonymous]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public IActionResult GetLogin([FromQuery] Models.LoginInfo info)
         {
             try
@@ -52,8 +52,8 @@ namespace WebAPI_Sample2.Controllers
 
         [HttpGet, Route("validate"), Authorize]
         [ProducesResponseType(typeof(Dictionary<string, string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public IActionResult GetValidate()
         {
             try
@@ -80,8 +80,8 @@ namespace WebAPI_Sample2.Controllers
 
         [HttpGet, Route("users"), Authorize]
         [ProducesResponseType(typeof(Models.UserInfo[]), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public ActionResult<IEnumerable<Models.UserInfo>> GetUsers()
         {
             try
@@ -101,8 +101,8 @@ namespace WebAPI_Sample2.Controllers
 
         [HttpGet, Route("user"), Authorize]
         [ProducesResponseType(typeof(Models.UserInfo), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public ActionResult<Models.UserInfo> GetUser([Required] string id)
         {
             try
@@ -123,8 +123,8 @@ namespace WebAPI_Sample2.Controllers
 
         [HttpPost, Route("add"), AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public IActionResult AddUser(UserInfo user)
         {
             try
