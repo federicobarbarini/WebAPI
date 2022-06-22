@@ -54,7 +54,7 @@
         }
         catch (ApiException ex)
         {
-            error = ex.Message;
+            error = ex.Response;
             loading = false;
             StateHasChanged();
         }
