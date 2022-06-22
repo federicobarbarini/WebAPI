@@ -1,6 +1,6 @@
 ﻿namespace WebAPI_Sample2.Helper
 {
-    public static class HttpExyensioncs
+    public static class HttpExtensioncs
     {
 
         /// <summary>
@@ -11,8 +11,12 @@
             ////--> Verifico se il token è compilato
             string? authHeader = r.Headers["Authorization"];
             if (authHeader.ToReal().Length == 0) throw new Exception("Necessaria Autenticazione.");
+
+            //--> Leggo il token dall'header della richiesta http
+            string token = authHeader.Replace("Bearer ", string.Empty);
+
             var a = new BLL.Auth(configuration);
-            var claims = a.Validate(authHeader);
+            var claims = a.Validate(token);
             var userId = claims["UserId"];
 
             return new Guid(userId);
