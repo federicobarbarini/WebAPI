@@ -13,5 +13,9 @@ namespace WebAPI_Sample2.Models
         [Required] 
         public string? Password { get; set; }
         public DateTime? CreatedDate { get; set; }
+
+        public bool? Disabled { get; set; }
+
+        public bool? Privacy { get; set; }
     }
 }
