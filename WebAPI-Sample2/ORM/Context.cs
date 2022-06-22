@@ -58,6 +58,7 @@ namespace WebAPI_Sample2.ORM
 
         public void AddUser(Models.UserInfo data)
         {
+            data.UserId = Guid.NewGuid();
             var users = this.GetUsers().ToList();
             if ((from x in users where x.UserName.ToReal().ToLowerInvariant() == data.UserName.ToReal().ToLowerInvariant() select x).Any())
                 throw new Exception(string.Format(@"UserName ""{0}"" already exist.", data.UserName));

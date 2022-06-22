@@ -129,6 +129,13 @@ namespace WebAPI_Sample2.Controllers
         {
             try
             {
+                ////--> Verifico se il token è compilato
+                string? authHeader = Request.Headers["Authorization"];
+                if (authHeader.ToReal().Length == 0) return Unauthorized("Necessaria Autenticazione.");
+                var a = new BLL.Auth(_configuration);
+                var claims = a.Validate(authHeader);
+                var userId = claims["UserId"];
+
                 //--> Aggiungo l'utente
                 var c = new ORM.Context(_configuration);
                 c.AddUser(user);
